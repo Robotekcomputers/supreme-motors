@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 720" fill="none" font-family="'Bebas Neue', Impact, 'Arial Black', sans-serif">
+  <defs>
+    <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E8304A"/>
+      <stop offset="0.55" stop-color="#C8102E"/>
+      <stop offset="1" stop-color="#9B0A20"/>
+    </linearGradient>
+    <linearGradient id="navyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0A3A7A"/>
+      <stop offset="0.6" stop-color="#002868"/>
+      <stop offset="1" stop-color="#001030"/>
+    </linearGradient>
+    <linearGradient id="starGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#DDE3EE"/>
+    </linearGradient>
+    <linearGradient id="bandGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E8ECF3"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <clipPath id="texasClip">
+      <path d="M 220 60 L 330 60 L 330 180 L 360 182 L 400 188 L 450 195 L 500 205 L 540 218 L 575 235 L 600 265 L 608 300 L 605 340 L 595 370 L 580 400 L 560 430 L 540 460 L 515 490 L 490 515 L 465 535 L 435 550 L 405 568 L 375 590 L 345 610 L 325 600 L 300 575 L 275 540 L 245 500 L 215 458 L 180 420 L 150 395 L 120 378 L 95 355 L 70 320 L 50 280 L 35 240 L 30 205 L 75 205 L 130 210 L 180 215 L 220 218 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Soft shadow under Texas -->
+  <ellipse cx="340" cy="640" rx="260" ry="18" fill="#000" opacity="0.35" filter="url(#softShadow)"/>
+
+  <!-- Texas filled -->
+  <g clip-path="url(#texasClip)">
+    <rect x="0" y="0" width="800" height="720" fill="url(#navyGrad)"/>
+    <rect x="0" y="0" width="800" height="360" fill="url(#redGrad)"/>
+    <!-- Inner shine -->
+    <ellipse cx="260" cy="150" rx="220" ry="80" fill="#FFFFFF" opacity="0.12"/>
+    <ellipse cx="480" cy="560" rx="260" ry="70" fill="#FFFFFF" opacity="0.06"/>
+  </g>
+
+  <!-- Texas outline: white border + dark inner stroke for crispness -->
+  <path d="M 220 60 L 330 60 L 330 180 L 360 182 L 400 188 L 450 195 L 500 205 L 540 218 L 575 235 L 600 265 L 608 300 L 605 340 L 595 370 L 580 400 L 560 430 L 540 460 L 515 490 L 490 515 L 465 535 L 435 550 L 405 568 L 375 590 L 345 610 L 325 600 L 300 575 L 275 540 L 245 500 L 215 458 L 180 420 L 150 395 L 120 378 L 95 355 L 70 320 L 50 280 L 35 240 L 30 205 L 75 205 L 130 210 L 180 215 L 220 218 Z"
+        fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 220 60 L 330 60 L 330 180 L 360 182 L 400 188 L 450 195 L 500 205 L 540 218 L 575 235 L 600 265 L 608 300 L 605 340 L 595 370 L 580 400 L 560 430 L 540 460 L 515 490 L 490 515 L 465 535 L 435 550 L 405 568 L 375 590 L 345 610 L 325 600 L 300 575 L 275 540 L 245 500 L 215 458 L 180 420 L 150 395 L 120 378 L 95 355 L 70 320 L 50 280 L 35 240 L 30 205 L 75 205 L 130 210 L 180 215 L 220 218 Z"
+        fill="none" stroke="#060A12" stroke-width="3" stroke-linejoin="round" stroke-opacity="0.5"/>
+
+  <!-- Lone Star (upper-left of Texas) -->
+  <g transform="translate(160,245)">
+    <polygon points="0,-58 17,-18 60,-18 25,8 38,50 0,24 -38,50 -25,8 -60,-18 -17,-18"
+             fill="url(#starGrad)" stroke="#C8102E" stroke-width="3" stroke-linejoin="round"/>
+    <polygon points="0,-58 17,-18 60,-18 25,8 38,50 0,24 0,-58"
+             fill="#FFFFFF" opacity="0.25"/>
+  </g>
+
+  <!-- Red speed swoosh under text -->
+  <path d="M 60 470 Q 300 430 590 475 L 590 490 Q 300 445 60 485 Z"
+        fill="url(#redGrad)" opacity="0.95"/>
+  <path d="M 90 500 Q 320 470 560 505" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.6" fill="none"/>
+
+  <!-- SUPREME MOTORS band -->
+  <g transform="translate(320,380) rotate(-6)">
+    <rect x="-290" y="-44" width="580" height="88" rx="6" fill="url(#bandGrad)" stroke="#060A12" stroke-width="3"/>
+    <rect x="-290" y="-44" width="580" height="8" fill="#C8102E"/>
+    <rect x="-290" y="36" width="580" height="8" fill="#002868"/>
+    <text x="0" y="22" font-size="78" font-weight="900" fill="#C8102E" text-anchor="middle" letter-spacing="4" font-style="italic">SUPREME MOTORS</text>
+  </g>
+</svg>
