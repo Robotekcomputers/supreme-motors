@@ -57,7 +57,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5%;height:72px;dis
 .hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(200,16,46,0.08) 0%,rgba(0,40,104,0.06) 40%,transparent 65%);pointer-events:none}
 .hero-flag{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--red) 0%,var(--red) 33%,var(--white) 33%,var(--white) 66%,var(--blue) 66%,var(--blue) 100%)}
 .hero-logo-wrap{position:relative;width:320px;height:320px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;z-index:1}
-.hero-logo{width:220px;position:relative;z-index:4;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(200,16,46,0.55)) drop-shadow(0 0 60px rgba(0,40,104,0.35))}
+.hero-logo{width:220px;position:relative;z-index:4;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(200,16,46,0.55)) drop-shadow(0 0 60px rgba(0,40,104,0.35));image-rendering:auto;-ms-interpolation-mode:bicubic}
+.nav-logo img,.hero-logo{image-rendering:-webkit-optimize-contrast;image-rendering:auto}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .logo-ring{position:absolute;top:50%;left:50%;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%)}
 .logo-ring.r1{width:260px;height:260px;border:1px solid rgba(200,16,46,0.4);border-top-color:transparent;border-right-color:transparent;animation:spin 8s linear infinite}
