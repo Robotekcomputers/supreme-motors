@@ -56,8 +56,29 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5%;height:72px;dis
 #hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;padding:100px 20px 60px}
 .hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(200,16,46,0.08) 0%,rgba(0,40,104,0.06) 40%,transparent 65%);pointer-events:none}
 .hero-flag{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--red) 0%,var(--red) 33%,var(--white) 33%,var(--white) 66%,var(--blue) 66%,var(--blue) 100%)}
-.hero-logo{width:220px;margin-bottom:32px;animation:float 5s ease-in-out infinite;position:relative;z-index:1;filter:drop-shadow(0 0 30px rgba(200,16,46,0.25))}
+.hero-logo-wrap{position:relative;width:320px;height:320px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;z-index:1}
+.hero-logo{width:220px;position:relative;z-index:4;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(200,16,46,0.55)) drop-shadow(0 0 60px rgba(0,40,104,0.35))}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.logo-ring{position:absolute;top:50%;left:50%;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%)}
+.logo-ring.r1{width:260px;height:260px;border:1px solid rgba(200,16,46,0.4);border-top-color:transparent;border-right-color:transparent;animation:spin 8s linear infinite}
+.logo-ring.r2{width:300px;height:300px;border:1px dashed rgba(0,40,104,0.5);border-bottom-color:transparent;animation:spin 14s linear infinite reverse}
+.logo-ring.r3{width:320px;height:320px;border:1px solid rgba(200,16,46,0.15);box-shadow:inset 0 0 40px rgba(200,16,46,0.1),0 0 40px rgba(200,16,46,0.08);animation:pulseRing 3s ease-in-out infinite}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes pulseRing{0%,100%{box-shadow:inset 0 0 40px rgba(200,16,46,0.1),0 0 40px rgba(200,16,46,0.08);opacity:0.8}50%{box-shadow:inset 0 0 60px rgba(200,16,46,0.25),0 0 80px rgba(200,16,46,0.25);opacity:1}}
+.logo-grid{position:absolute;top:50%;left:50%;width:280px;height:280px;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;opacity:0.35;pointer-events:none;
+  background-image:linear-gradient(rgba(200,16,46,0.25) 1px,transparent 1px),linear-gradient(90deg,rgba(0,40,104,0.35) 1px,transparent 1px);
+  background-size:20px 20px;mask-image:radial-gradient(circle,#000 40%,transparent 70%);-webkit-mask-image:radial-gradient(circle,#000 40%,transparent 70%);animation:gridShift 6s linear infinite}
+@keyframes gridShift{to{background-position:20px 20px,20px 20px}}
+.logo-scan{position:absolute;top:50%;left:50%;width:260px;height:260px;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;pointer-events:none;z-index:3}
+.logo-scan::before{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(200,16,46,0.9),rgba(255,255,255,0.9),rgba(200,16,46,0.9),transparent);box-shadow:0 0 18px rgba(200,16,46,0.8);animation:scanLine 3.2s ease-in-out infinite}
+@keyframes scanLine{0%{top:-4%}50%{top:100%}100%{top:-4%}}
+.logo-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 12px var(--red),0 0 24px rgba(200,16,46,0.6);top:50%;left:50%;margin:-3px 0 0 -3px;pointer-events:none}
+.logo-dot.d1{animation:orbit1 8s linear infinite}
+.logo-dot.d2{background:#fff;box-shadow:0 0 12px #fff,0 0 24px rgba(255,255,255,0.6);animation:orbit2 11s linear infinite}
+.logo-dot.d3{background:#4a9fff;box-shadow:0 0 12px #4a9fff,0 0 24px rgba(0,40,104,0.7);animation:orbit3 14s linear infinite}
+@keyframes orbit1{from{transform:rotate(0deg) translateX(130px) rotate(0deg)}to{transform:rotate(360deg) translateX(130px) rotate(-360deg)}}
+@keyframes orbit2{from{transform:rotate(120deg) translateX(150px) rotate(-120deg)}to{transform:rotate(480deg) translateX(150px) rotate(-480deg)}}
+@keyframes orbit3{from{transform:rotate(240deg) translateX(160px) rotate(-240deg)}to{transform:rotate(-120deg) translateX(160px) rotate(120deg)}}
 .hero-tagline{font-family:var(--font-head);font-size:clamp(16px,2.5vw,22px);color:var(--red);letter-spacing:8px;text-transform:uppercase;margin-bottom:12px;position:relative;z-index:1}
 .hero-title{font-family:var(--font-head);font-size:clamp(48px,8vw,100px);color:var(--white);line-height:1;margin-bottom:20px;position:relative;z-index:1;letter-spacing:4px}
 .hero-title em{font-style:normal;background:linear-gradient(135deg,var(--red),var(--red-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -266,7 +287,17 @@ footer img{height:50px;margin-bottom:16px;filter:drop-shadow(0 0 8px rgba(200,16
 <section id="hero">
   <div class="hero-flag"></div>
   <div class="hero-glow"></div>
-  <img src="supreme-logo.png" alt="Supreme Motors" class="hero-logo">
+  <div class="hero-logo-wrap">
+    <div class="logo-grid"></div>
+    <div class="logo-ring r3"></div>
+    <div class="logo-ring r2"></div>
+    <div class="logo-ring r1"></div>
+    <div class="logo-scan"></div>
+    <div class="logo-dot d1"></div>
+    <div class="logo-dot d2"></div>
+    <div class="logo-dot d3"></div>
+    <img src="supreme-logo.png" alt="Supreme Motors" class="hero-logo">
+  </div>
   <div class="hero-tagline">
     <span class="en">Spring, Texas</span>
     <span class="es" style="display:none">Spring, Texas</span>
