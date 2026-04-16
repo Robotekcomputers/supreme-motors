@@ -525,18 +525,14 @@ footer img{height:50px;margin-bottom:16px;filter:drop-shadow(0 0 8px rgba(200,16
 <script>
 // ═══ INVENTORY DATA ═══
 const cars=[
-  {id:1,year:2018,make:'Honda',model:'Civic',type:'sedan',trans:'Automatic',drive:'FWD',fuel:'Gasoline',price:'Call For Price'},
-  {id:2,year:2020,make:'Cadillac',model:'CT5',type:'sedan',trans:'Automatic',drive:'RWD',fuel:'Gasoline',price:'Call For Price'},
-  {id:3,year:2025,make:'Jeep',model:'Gladiator',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price'},
-  {id:4,year:2015,make:'GMC',model:'Sierra 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price'},
-  {id:5,year:2019,make:'Ford',model:'F-150 SuperCrew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price'},
-  {id:6,year:2021,make:'Chevrolet',model:'Silverado 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price'},
-  {id:7,year:2010,make:'GMC',model:'Sierra 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price'},
-  {id:8,year:2017,make:'Chevrolet',model:'Silverado 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price'},
-  {id:9,year:2019,make:'Chevrolet',model:'Silverado 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price'},
-  {id:10,year:2010,make:'Chevrolet',model:'Silverado 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price'},
-  {id:11,year:2016,make:'Chevrolet',model:'Silverado 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price'},
-  {id:12,year:2013,make:'Chevrolet',model:'Silverado 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price'}
+  {id:1,year:2018,make:'Honda',model:'Civic',type:'sedan',trans:'Automatic',drive:'FWD',fuel:'Gasoline',price:'Call For Price',img:'cars/civic-18.jpg'},
+  {id:2,year:2020,make:'Cadillac',model:'CT5',type:'sedan',trans:'Automatic',drive:'RWD',fuel:'Gasoline',price:'Call For Price',img:'cars/cadillac-cts.jpg'},
+  {id:3,year:2025,make:'Jeep',model:'Gladiator',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/jeep-gladiator-25.jpg'},
+  {id:4,year:2016,make:'Ford',model:'F-150 SuperCrew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/ford-f150-16.jpg'},
+  {id:5,year:2017,make:'Chevrolet',model:'Tahoe',type:'suv',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/chevy-tahoe-17.jpg'},
+  {id:6,year:2018,make:'Chevrolet',model:'Silverado 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/chevy-silverado-18.jpg'},
+  {id:7,year:2019,make:'Chevrolet',model:'Silverado 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/chevy-silverado-19.jpg'},
+  {id:8,year:2019,make:'GMC',model:'Sierra 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/gmc-sierra-19.jpg'}
 ];
 
 // ═══ HOURS DATA ═══
@@ -559,7 +555,7 @@ function renderCars(filter='all'){
   grid.innerHTML=filtered.map(c=>`
     <div class="inv-card" onclick="openDet(${c.id})">
       <div class="inv-photo">
-        <div class="inv-no-photo">${c.year} ${c.make} ${c.model}</div>
+        <img src="${c.img}" alt="${c.year} ${c.make} ${c.model}" loading="lazy">
         <div class="inv-badge">${c.type}</div>
       </div>
       <div class="inv-info">
