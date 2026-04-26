@@ -209,20 +209,33 @@ footer img{height:50px;margin-bottom:16px;filter:drop-shadow(0 0 8px rgba(200,16
 .foot-nova a{color:var(--gray-dark);text-decoration:underline}
 
 /* ═══ DETAIL MODAL ═══ */
-.det-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.3s}
+.det-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.3s;padding:20px}
 .det-overlay.open{opacity:1;pointer-events:auto}
-.det-box{background:var(--card);border:1px solid rgba(200,16,46,0.15);border-radius:var(--radius);max-width:700px;width:96%;max-height:90vh;overflow-y:auto}
-.det-body{padding:36px}
-.det-close{position:absolute;top:16px;right:16px;background:rgba(0,0,0,0.6);border:1px solid rgba(200,16,46,0.3);color:var(--cream);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:.3s;z-index:3}
+.det-box{background:var(--card);border:1px solid rgba(200,16,46,0.15);border-radius:var(--radius);max-width:900px;width:100%;max-height:95vh;overflow-y:auto}
+.det-gallery{position:relative;background:#000;aspect-ratio:16/10;overflow:hidden}
+.det-gallery-img{width:100%;height:100%;object-fit:cover;display:block}
+.det-gallery-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.2);color:#fff;width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;transition:.3s;z-index:2}
+.det-gallery-nav:hover{background:var(--red);border-color:var(--red)}
+.det-gallery-nav.prev{left:16px}
+.det-gallery-nav.next{right:16px}
+.det-gallery-counter{position:absolute;bottom:16px;left:16px;background:rgba(0,0,0,0.7);color:#fff;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:0.5px}
+.det-thumbs{display:flex;gap:8px;padding:12px;overflow-x:auto;background:var(--dark);scrollbar-width:thin}
+.det-thumbs::-webkit-scrollbar{height:5px}
+.det-thumb{flex-shrink:0;width:80px;height:60px;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:.2s;opacity:0.6}
+.det-thumb:hover{opacity:1}
+.det-thumb.active{border-color:var(--red);opacity:1}
+.det-thumb img{width:100%;height:100%;object-fit:cover}
+.det-body{padding:28px}
+.det-close{position:absolute;top:16px;right:16px;background:rgba(0,0,0,0.7);border:1px solid rgba(200,16,46,0.4);color:var(--cream);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:.3s;z-index:5}
 .det-close:hover{background:var(--red);color:#fff}
-.det-top{margin-bottom:24px}
+.det-top{margin-bottom:20px}
 .det-year{font-size:13px;color:var(--red);font-weight:700;letter-spacing:2px}
-.det-name{font-family:var(--font-head);font-size:34px;color:var(--white);margin:4px 0;letter-spacing:2px}
+.det-name{font-family:var(--font-head);font-size:30px;color:var(--white);margin:4px 0;letter-spacing:2px;line-height:1.1}
 .det-price{font-family:var(--font-head);font-size:32px;color:var(--white);margin-top:8px}
-.det-specs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
-.det-spec{background:var(--surface);border-radius:12px;padding:16px;text-align:center}
+.det-specs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+.det-spec{background:var(--surface);border-radius:12px;padding:14px 10px;text-align:center}
 .det-spec-label{font-size:10px;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
-.det-spec-val{font-size:15px;color:var(--white);font-weight:600}
+.det-spec-val{font-size:14px;color:var(--white);font-weight:600;word-break:break-all}
 .det-btns{display:flex;gap:12px}
 .det-btns a{flex:1;text-align:center;padding:14px;border-radius:30px;font-weight:700;font-size:13px;text-decoration:none;letter-spacing:0.5px;transition:.3s}
 
@@ -505,6 +518,13 @@ footer img{height:50px;margin-bottom:16px;filter:drop-shadow(0 0 8px rgba(200,16
 <div class="det-overlay" id="detOverlay" onclick="if(event.target===this)closeDet()">
   <div class="det-box" style="position:relative">
     <button class="det-close" onclick="closeDet()">&times;</button>
+    <div class="det-gallery">
+      <img id="detGalleryImg" class="det-gallery-img" src="" alt="">
+      <button class="det-gallery-nav prev" onclick="galleryPrev()">‹</button>
+      <button class="det-gallery-nav next" onclick="galleryNext()">›</button>
+      <div class="det-gallery-counter"><span id="detGalleryCounter">1 / 1</span></div>
+    </div>
+    <div class="det-thumbs" id="detThumbs"></div>
     <div class="det-body">
       <div class="det-top">
         <div class="det-year" id="detYear"></div>
@@ -525,14 +545,11 @@ footer img{height:50px;margin-bottom:16px;filter:drop-shadow(0 0 8px rgba(200,16
 <script>
 // ═══ INVENTORY DATA ═══
 const cars=[
-  {id:1,year:2018,make:'Honda',model:'Civic',type:'sedan',trans:'Automatic',drive:'FWD',fuel:'Gasoline',price:'Call For Price',img:'cars/civic-18.jpg'},
-  {id:2,year:2020,make:'Cadillac',model:'CT5',type:'sedan',trans:'Automatic',drive:'RWD',fuel:'Gasoline',price:'Call For Price',img:'cars/cadillac-cts.jpg'},
-  {id:3,year:2025,make:'Jeep',model:'Gladiator',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/jeep-gladiator-25.jpg'},
-  {id:4,year:2016,make:'Ford',model:'F-150 SuperCrew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/ford-f150-16.jpg'},
-  {id:5,year:2017,make:'Chevrolet',model:'Tahoe',type:'suv',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/chevy-tahoe-17.jpg'},
-  {id:6,year:2018,make:'Chevrolet',model:'Silverado 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/chevy-silverado-18.jpg'},
-  {id:7,year:2019,make:'Chevrolet',model:'Silverado 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/chevy-silverado-19.jpg'},
-  {id:8,year:2019,make:'GMC',model:'Sierra 1500 Crew Cab',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',price:'Call For Price',img:'cars/gmc-sierra-19.jpg'}
+  {id:1,year:2020,make:'Chevrolet',model:'Silverado 1500 LT Trail Boss',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',miles:'120,875',vin:'1GCPYFED3LZ372633',price:'$25,995',img:'cars/silverado-2020-red-1.jpg',gallery:['cars/silverado-2020-red-1.jpg','cars/silverado-2020-red-2.jpg','cars/silverado-2020-red-3.jpg','cars/silverado-2020-red-4.jpg']},
+  {id:2,year:2021,make:'Cadillac',model:'CT4 Premium Luxury',type:'sedan',trans:'Automatic',drive:'RWD',fuel:'Gasoline',miles:'38,542',vin:'1G6DB5RK7M0117614',price:'$27,995',img:'cars/cadillac-2021-burgundy-1.jpg',gallery:['cars/cadillac-2021-burgundy-1.jpg','cars/cadillac-2021-burgundy-2.jpg','cars/cadillac-2021-burgundy-3.jpg','cars/cadillac-2021-burgundy-4.jpg','cars/cadillac-2021-burgundy-5.jpg','cars/cadillac-2021-burgundy-6.jpg','cars/cadillac-2021-burgundy-7.jpg','cars/cadillac-2021-burgundy-8.jpg','cars/cadillac-2021-burgundy-9.jpg','cars/cadillac-2021-burgundy-10.jpg']},
+  {id:3,year:2019,make:'Chevrolet',model:'Silverado 1500 RST',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',miles:'93,358',vin:'3GCPWDED7KG162013',price:'$23,995',img:'cars/silverado-2019-gray-1.jpg',gallery:['cars/silverado-2019-gray-1.jpg','cars/silverado-2019-gray-2.jpg','cars/silverado-2019-gray-3.jpg','cars/silverado-2019-gray-4.jpg','cars/silverado-2019-gray-5.jpg','cars/silverado-2019-gray-6.jpg']},
+  {id:4,year:2019,make:'Chevrolet',model:'Silverado 1500 LT',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',miles:'94,183',vin:'1GCPWCED8KZ402812',price:'$21,995',img:'cars/silverado-2019-white-1.jpg',gallery:['cars/silverado-2019-white-1.jpg','cars/silverado-2019-white-2.jpg','cars/silverado-2019-white-3.jpg','cars/silverado-2019-white-4.jpg']},
+  {id:5,year:2014,make:'Ram',model:'1500 Express',type:'truck',trans:'Automatic',drive:'4WD',fuel:'Gasoline',miles:'146,604',vin:'1C6RR7KT5ES203613',price:'$12,995',img:'cars/ram-2014-gray-1.jpg',gallery:['cars/ram-2014-gray-1.jpg','cars/ram-2014-gray-2.jpg','cars/ram-2014-gray-3.jpg']}
 ];
 
 // ═══ HOURS DATA ═══
@@ -598,21 +615,40 @@ function filterCars(type){
 }
 
 // ═══ DETAIL MODAL ═══
+let currentGallery=[];
+let currentGalleryIdx=0;
+
 function openDet(id){
   const c=cars.find(x=>x.id===id);
   if(!c)return;
   document.getElementById('detYear').textContent=c.year;
   document.getElementById('detName').textContent=c.make+' '+c.model;
   document.getElementById('detPrice').textContent=c.price;
-  document.getElementById('detSpecs').innerHTML=`
-    <div class="det-spec"><div class="det-spec-label"><span class="en">Transmission</span><span class="es" style="display:none">Transmisi\u00f3n</span></div><div class="det-spec-val">${c.trans}</div></div>
-    <div class="det-spec"><div class="det-spec-label"><span class="en">Drivetrain</span><span class="es" style="display:none">Tracci\u00f3n</span></div><div class="det-spec-val">${c.drive}</div></div>
-    <div class="det-spec"><div class="det-spec-label"><span class="en">Fuel</span><span class="es" style="display:none">Combustible</span></div><div class="det-spec-val">${c.fuel}</div></div>
-  `;
+  let specsHtml='';
+  if(c.miles)specsHtml+='<div class="det-spec"><div class="det-spec-label"><span class="en">Mileage</span><span class="es" style="display:none">Millaje</span></div><div class="det-spec-val">'+c.miles+' mi</div></div>';
+  specsHtml+='<div class="det-spec"><div class="det-spec-label"><span class="en">Transmission</span><span class="es" style="display:none">Transmisi\u00f3n</span></div><div class="det-spec-val">'+c.trans+'</div></div>';
+  specsHtml+='<div class="det-spec"><div class="det-spec-label"><span class="en">Drivetrain</span><span class="es" style="display:none">Tracci\u00f3n</span></div><div class="det-spec-val">'+c.drive+'</div></div>';
+  specsHtml+='<div class="det-spec"><div class="det-spec-label"><span class="en">Fuel</span><span class="es" style="display:none">Combustible</span></div><div class="det-spec-val">'+c.fuel+'</div></div>';
+  if(c.vin)specsHtml+='<div class="det-spec" style="grid-column:1/-1"><div class="det-spec-label">VIN</div><div class="det-spec-val" style="font-size:12px;letter-spacing:1px">'+c.vin+'</div></div>';
+  document.getElementById('detSpecs').innerHTML=specsHtml;
+  currentGallery=c.gallery||[c.img];
+  currentGalleryIdx=0;
+  renderGallery();
   document.getElementById('detOverlay').classList.add('open');
   document.body.style.overflow='hidden';
   updateLangVisibility();
 }
+
+function renderGallery(){
+  document.getElementById('detGalleryImg').src=currentGallery[currentGalleryIdx];
+  document.getElementById('detGalleryCounter').textContent=(currentGalleryIdx+1)+' / '+currentGallery.length;
+  document.getElementById('detThumbs').innerHTML=currentGallery.map((src,i)=>'<div class="det-thumb '+(i===currentGalleryIdx?'active':'')+'" onclick="galleryGo('+i+')"><img src="'+src+'" alt="" loading="lazy"></div>').join('');
+  const showNav=currentGallery.length>1;
+  document.querySelectorAll('.det-gallery-nav').forEach(b=>b.style.display=showNav?'flex':'none');
+}
+function galleryPrev(){currentGalleryIdx=(currentGalleryIdx-1+currentGallery.length)%currentGallery.length;renderGallery();}
+function galleryNext(){currentGalleryIdx=(currentGalleryIdx+1)%currentGallery.length;renderGallery();}
+function galleryGo(i){currentGalleryIdx=i;renderGallery();}
 
 function closeDet(){
   document.getElementById('detOverlay').classList.remove('open');
